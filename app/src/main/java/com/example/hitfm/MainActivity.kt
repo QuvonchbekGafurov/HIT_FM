@@ -2,19 +2,13 @@ package com.example.hitfm
 
 import android.os.Build
 import android.os.Bundle
-import android.view.WindowInsetsController
-import android.view.WindowInsetsController.*
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.ViewModelProvider
 import com.example.hitfm.ui.theme.HITFMTheme
+import com.example.hitfm.uiview.MainScreen
+import com.example.hitfm.uiview.RadioPlayer
+import java.lang.reflect.Modifier
 
 class MainActivity : ComponentActivity() {
 
@@ -24,25 +18,9 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             HITFMTheme {
-                RadioPlayer()
+                MainScreen()
             }
         }
     }
 
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    HITFMTheme {
-        Greeting("Android")
-    }
 }

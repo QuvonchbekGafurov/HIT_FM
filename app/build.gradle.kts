@@ -70,14 +70,21 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation("androidx.media3:media3-exoplayer:1.4.1")
-    implementation("androidx.media3:media3-exoplayer-dash:1.4.1")
-    implementation("androidx.media3:media3-ui:1.4.1")
+    implementation(libs.androidx.media3.exoplayer)
+    implementation(libs.androidx.media3.exoplayer.dash)
+    implementation(libs.androidx.media3.ui)
 
     implementation ("androidx.localbroadcastmanager:localbroadcastmanager:1.0.0")
 
     implementation("androidx.media:media:1.1.0")
 
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.6")
+
+    implementation ("androidx.compose.material3:material3:1.3.0")
+    implementation ("androidx.compose.material:material-icons-core:1.1.0")
+    implementation ("androidx.compose.material:material-icons-extended:1.1.0")
+
+
+
 
 }
