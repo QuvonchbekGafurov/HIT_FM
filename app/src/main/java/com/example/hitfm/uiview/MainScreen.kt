@@ -1,9 +1,6 @@
-package com.example.hitfm
+package com.example.hitfm.uiview
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.IntentFilter
-import android.icu.text.RelativeDateTimeFormatter.Style
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -19,12 +16,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,10 +25,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.hitfm.R
+import com.example.hitfm.RadioService
+import com.example.hitfm.ui.theme.PurpleGrey80
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
@@ -43,12 +38,12 @@ fun RadioPlayer(){
     val context = LocalContext.current
 
     // LaunchedEffect bilan dastlabki holatni o'rnatamiz
-    LaunchedEffect(Unit) {
-        val playIntent = Intent(context, RadioService::class.java).apply {
-            action = RadioService.ACTION_PLAY
-        }
-        context.startService(playIntent)
-    }
+//    LaunchedEffect(Unit) {
+//        val playIntent = Intent(context, RadioService::class.java).apply {
+//            action = RadioService.ACTION_PLAY
+//        }
+//        context.startService(playIntent)
+//    }
 
 
     val imageResource = if (RadioService.RadioState.isPlaying.value) {
@@ -61,7 +56,6 @@ fun RadioPlayer(){
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color.White)
     ) {
 
         Text(
@@ -76,7 +70,7 @@ fun RadioPlayer(){
             .align(Alignment.Center)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.hit_fm),
+                painter = painterResource(id = R.drawable.logo),
                 contentDescription = "Sample Image",
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
@@ -125,10 +119,4 @@ fun RadioPlayer(){
 
 }
 
-@RequiresApi(Build.VERSION_CODES.Q)
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun ShowUi() {
-    RadioPlayer()
-}
 
