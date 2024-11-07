@@ -6,7 +6,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
-import com.example.hitfm.ui.theme.HITFMTheme
 import com.example.hitfm.uiview.MainScreen
 
 class MainActivity : ComponentActivity() {
@@ -16,9 +15,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            HITFMTheme {
-                MainScreen()
-            }
+              MainScreen()
         }
     }
 

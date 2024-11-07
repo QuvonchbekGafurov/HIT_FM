@@ -10,15 +10,12 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import android.app.Service
-import android.content.Context
 import android.graphics.Color
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
 import java.util.concurrent.TimeUnit
 
 
@@ -62,7 +59,6 @@ class RadioService : Service() {
         )
         val picture = BitmapFactory.decodeResource(resources, R.drawable.hit_fm)
 
-
         // Xabarnoma manageri
         notificationManager = NotificationManagerCompat.from(this)
         val builder = NotificationCompat.Builder(this, BaseApplication.CHANNEL_1_ID)
@@ -86,7 +82,7 @@ class RadioService : Service() {
             .setAutoCancel(true)
             .setCategory(NotificationCompat.CATEGORY_MESSAGE)
             .setOnlyAlertOnce(true)
-            .setOngoing(true)
+            .setOngoing(false)
 
 
 
