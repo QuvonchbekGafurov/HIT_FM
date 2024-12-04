@@ -1,4 +1,4 @@
-package com.example.hitfm
+package com.example.hitfm.HitFm
 
 import android.os.Build
 import android.os.Bundle
@@ -6,7 +6,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
-import com.example.hitfm.uiview.MainScreen
+import com.example.hitfm.HitFm.view.MainScreen
+import com.mohamedbenrejeb.youtubecomposemotionlayout.screens.home.HomeScreen
 
 class MainActivity : ComponentActivity() {
 

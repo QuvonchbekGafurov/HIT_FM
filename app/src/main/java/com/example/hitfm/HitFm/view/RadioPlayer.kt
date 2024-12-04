@@ -1,8 +1,7 @@
-package com.example.hitfm.uiview
+package com.example.hitfm.view
 
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -26,7 +25,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.hitfm.R
-import com.example.hitfm.RadioService
+import com.example.hitfm.HitFm.RadioService
+import com.example.hitfm.HitFm.RadioState
+import com.example.hitfm.ui.theme.Black
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
@@ -42,7 +43,7 @@ fun RadioPlayer(){
 //    }
 
 
-    val imageResource = if (RadioService.RadioState.isPlaying.value) {
+    val imageResource = if (RadioState.isPlaying.value) {
         painterResource(id = R.drawable.pause)  // Pause icon
     } else {
         painterResource(id = R.drawable.play)   // Play icon
@@ -53,13 +54,13 @@ fun RadioPlayer(){
         modifier = Modifier
             .fillMaxSize()
     ) {
-
         Text(
             text = "ХИТ FM",
+            color = Black,
             fontStyle = FontStyle.Italic,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
-                .padding(top = 20.dp)
+                .padding(top = 35.dp)
                 .align(Alignment.TopCenter),
             fontSize = 25.sp
         )
@@ -78,7 +79,7 @@ fun RadioPlayer(){
 
             Image(
                 painter = imageResource,
-                contentDescription = if (RadioService.RadioState.isPlaying.value) "Pause" else "Play",
+                contentDescription = if (RadioState.isPlaying.value) "Pause" else "Play",
                 modifier = Modifier
                     .padding(top = 60.dp)
                     .align(Alignment.CenterHorizontally)
@@ -87,14 +88,13 @@ fun RadioPlayer(){
                         indication = null,  // Soya va vizual feedbackni olib tashlash
                         interactionSource = remember { MutableInteractionSource() }
                     ) {
-                        if (RadioService.RadioState.isPlaying.value) {
+                        if (RadioState.isPlaying.value) {
                             // Stop playing
                             val pauseIntent = Intent(context, RadioService::class.java).apply {
                                 action = RadioService.ACTION_PAUSE
                             }
                             context.startService(pauseIntent)
-                            RadioService.RadioState.isPlaying.value=false
-                            Log.e("TAG", "RadioPlayer: ${RadioService.RadioState.isPlaying.value}", )
+                            RadioState.isPlaying.value = false
 
                         } else {
                             // Start playing
@@ -102,8 +102,7 @@ fun RadioPlayer(){
                                 action = RadioService.ACTION_PLAY
                             }
                             context.startService(playIntent)
-                            RadioService.RadioState.isPlaying.value=true
-                            Log.e("TAG", "RadioPlayer: ${RadioService.RadioState.isPlaying.value}", )
+                            RadioState.isPlaying.value = true
 
                         }
 
@@ -112,8 +111,6 @@ fun RadioPlayer(){
             )
         }
     }
-    Log.e("TAG", "RadioPlayer: ${RadioService.RadioState.isPlaying.value}", )
-
 }
 
 

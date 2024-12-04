@@ -1,11 +1,9 @@
-package com.example.hitfm.uiview
+package com.example.hitfm.view
 
 import android.content.Intent
 import android.net.Uri
-import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -17,7 +15,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
@@ -38,6 +35,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.hitfm.R
+import com.example.hitfm.ui.theme.Black
 
 // 1. Roboto shrift oilasini yaratamiz
 
@@ -72,6 +70,7 @@ fun MoreScreen() {
             modifier = Modifier
                 .padding(top = 20.dp),
             fontSize = 25.sp,
+            color = Black,
             fontFamily = robotoFontFamily,
             fontWeight = FontWeight.Bold
         )
@@ -96,7 +95,8 @@ fun MoreScreen() {
             )
             Spacer(modifier = Modifier.width(10.dp))
             Text(
-                text = "контакт",
+                text = "Контакты",
+                color = Black,
                 fontFamily = robotoFontFamily,
                 modifier = Modifier,
                 fontSize = 15.sp,
@@ -133,9 +133,10 @@ fun MoreScreen() {
             Spacer(modifier = Modifier.width(10.dp))
 
             Text(
-                text = "поделиться приложением",
+                text = "Поделиться",
                 fontFamily = robotoFontFamily,
                 modifier = Modifier,
+                color = Black,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -143,6 +144,7 @@ fun MoreScreen() {
         Spacer(modifier = Modifier.height(50.dp))
         Text(
             text = "Мы в соцсетях",
+            color = Black,
             modifier = Modifier
                 .padding(top = 20.dp),
             fontSize = 25.sp,
@@ -159,8 +161,14 @@ fun MoreScreen() {
                 imageSize = 35.dp,
                 circleSize = 35.dp,
                 color = Color.Green,
-                link = "https://www.instagram.com/hitfm.uz?igsh=MW5neXhxaDVsZXZzdw==",
-                modifier = Modifier
+                modifier = Modifier.combinedClickable(
+                    indication = null, // Soyani olib tashlaydi
+                    interactionSource = remember { MutableInteractionSource() },
+                    onClick = {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.instagram.com/hitfm.uz?igsh=MW5neXhxaDVsZXZzdw=="))
+                        context.startActivity(intent)
+                    }
+                )
             )
             Spacer(modifier = Modifier.width(10.dp))
 
@@ -169,8 +177,14 @@ fun MoreScreen() {
                 imageSize = 35.dp,
                 circleSize = 35.dp,
                 color = Color.Green,
-                link = "https://t.me/yangiradio",
-                modifier = Modifier
+                modifier = Modifier.combinedClickable(
+                    indication = null, // Soyani olib tashlaydi
+                    interactionSource = remember { MutableInteractionSource() },
+                    onClick = {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/yangiradio"))
+                        context.startActivity(intent)
+                    }
+                )
             )
 
         }

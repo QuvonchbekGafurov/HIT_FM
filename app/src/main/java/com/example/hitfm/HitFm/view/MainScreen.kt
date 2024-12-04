@@ -1,6 +1,5 @@
-package com.example.hitfm.uiview
+package com.example.hitfm.view
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -40,14 +39,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.example.hitfm.NavItem
+import com.example.hitfm.HitFm.NavItem
 import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material.icons.filled.MusicNote
+import androidx.compose.material.icons.filled.YoutubeSearchedFor
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import com.example.hitfm.R
-import com.example.hitfm.RadioService
+import com.example.hitfm.HitFm.RadioService
+import com.example.hitfm.HitFm.RadioState
+import com.example.hitfm.HitFm.YoutobeScreen
+import com.example.hitfm.ui.theme.Black
 
 
 @RequiresApi(Build.VERSION_CODES.Q)
@@ -58,8 +61,9 @@ fun MainScreen() {
     val context= LocalContext.current
 
     val navItemList = listOf(
-        NavItem("слушать", Icons.Filled.MusicNote,0),
-        NavItem("еще", Icons.Filled.MoreHoriz,0),
+        NavItem("Слушать", Icons.Filled.MusicNote,0),
+        NavItem("Еще", Icons.Filled.MoreHoriz,0),
+        NavItem("YouTobe",Icons.Filled.YoutubeSearchedFor,0)
     )
 
     var selectedIndex by remember {
@@ -72,7 +76,7 @@ fun MainScreen() {
             Column {
                 if(selectedIndex==1)
                 {
-                    val imageResource = if (RadioService.RadioState.isPlaying.value) {
+                    val imageResource = if (RadioState.isPlaying.value) {
                         R.drawable.pause  // Pause icon
                     } else {
                         R.drawable.play   // Play icon
@@ -88,7 +92,7 @@ fun MainScreen() {
 
                     ) {
                     Image(
-                        painter = painterResource(id = R.drawable.hit_fm),
+                        painter = painterResource(id = R.drawable.icon),
                         contentDescription = "",
                         modifier = Modifier.fillMaxHeight()
                     )
@@ -96,24 +100,24 @@ fun MainScreen() {
                         ImageInCircle(color = Color.White, image =R.drawable.previus_arrows, imageSize = 25.dp, modifier = Modifier)
                         Image(painter = painterResource(id = imageResource), contentDescription = "",
                             modifier = Modifier
-                                .size(25.dp)
+                                .size(50.dp)
                                 .fillMaxHeight()
                                 .align(alignment = Alignment.CenterVertically)
                                 .clickable(
                                     indication = null,  // Soya va vizual feedbackni olib tashlash
                                     interactionSource = remember { MutableInteractionSource() }
                                 ) {
-                                    if (RadioService.RadioState.isPlaying.value) {
+                                    if (RadioState.isPlaying.value) {
                                         // Stop playing
                                         val pauseIntent =
                                             Intent(context, RadioService::class.java).apply {
                                                 action = RadioService.ACTION_PAUSE
                                             }
                                         context.startService(pauseIntent)
-                                        RadioService.RadioState.isPlaying.value = false
+                                        RadioState.isPlaying.value = false
                                         Log.e(
                                             "TAG",
-                                            "RadioPlayer: ${RadioService.RadioState.isPlaying.value}",
+                                            "RadioPlayer: ${RadioState.isPlaying.value}",
                                         )
 
                                     } else {
@@ -123,12 +127,7 @@ fun MainScreen() {
                                                 action = RadioService.ACTION_PLAY
                                             }
                                         context.startService(playIntent)
-                                        RadioService.RadioState.isPlaying.value = true
-                                        Log.e(
-                                            "TAG",
-                                            "RadioPlayer: ${RadioService.RadioState.isPlaying.value}",
-                                        )
-
+                                        RadioState.isPlaying.value = true
                                     }
 
                                 },
@@ -164,7 +163,7 @@ fun MainScreen() {
                             colors = NavigationBarItemDefaults.colors(
                                 selectedIconColor = Color.Black,  // Specify color for the icon when selected
                                 unselectedIconColor = Color.LightGray, // Specify color for the icon when unselected
-                                selectedTextColor = Color.Black,   // Specify color for text when selected
+                                selectedTextColor = Black,   // Specify color for text when selected
                                 unselectedTextColor = Color.LightGray, // Specify color for text when unselected
                                 indicatorColor = Color.White  // Set indicator color to transparent
                             )
@@ -185,6 +184,7 @@ fun ContentScreen(modifier: Modifier = Modifier, selectedIndex : Int) {
     when(selectedIndex){
         0-> RadioPlayer()
         1-> MoreScreen()
+        3-> YoutobeScreen()
     }
 }
 
@@ -194,7 +194,6 @@ fun ImageInCircle(
     image: Int,  // Rasmni parametr sifatida qabul qilamiz
     imageSize: Dp = 32.dp,  // Rasmning o'lchamini ham parametr qilamiz
     circleSize: Dp = 64.dp,  // Aylananing o'lchamini parametr qilamiz
-    link:String?=null,
     modifier: Modifier
 ) {
     val context= LocalContext.current
@@ -204,23 +203,14 @@ fun ImageInCircle(
             .background(
                 color = color,
                 shape = CircleShape
-            ).apply {
-                if (link != null) {
-                    clickable() {
-                            link?.let {
-                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it))
-                                context.startActivity(intent)
-                            }
-                    }
-                }
-            }
+            )
         ,
         contentAlignment = Alignment.Center  // Rasmni o'rtada joylashtirish
     ) {
         Image(
             painterResource(id = image),  // Funksiya orqali berilgan rasmni ko'rsatamiz
             contentDescription = "Image in Circle",
-            modifier = Modifier.size(imageSize)  // Rasmingizning o'lchami
+            modifier = modifier.size(imageSize)  // Rasmingizning o'lchami
         )
     }
 }

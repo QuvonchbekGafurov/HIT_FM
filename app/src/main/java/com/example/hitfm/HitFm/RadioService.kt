@@ -1,5 +1,6 @@
-package com.example.hitfm
+package com.example.hitfm.HitFm
 
+import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -16,7 +17,7 @@ import android.os.IBinder
 import android.os.Looper
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
-import java.util.concurrent.TimeUnit
+import com.example.hitfm.R
 
 
 @RequiresApi(Build.VERSION_CODES.Q)
@@ -40,12 +41,6 @@ class RadioService : Service() {
         val mediaItem = MediaItem.fromUri(streamUrl)
         player.setMediaItem(mediaItem)
         player.prepare()
-
-        stopRunnable = Runnable {
-            stopSelf() // Service ni to'xtatish
-            Log.e("TAG", "Service has been stopped after 3 hours")
-        }
-        handler.postDelayed(stopRunnable, TimeUnit.HOURS.toMillis(2))
     }
 
     private fun startForegroundService() {
@@ -57,27 +52,33 @@ class RadioService : Service() {
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-        val picture = BitmapFactory.decodeResource(resources, R.drawable.hit_fm)
+        val picture = BitmapFactory.decodeResource(resources, R.drawable.icon)
 
         // Xabarnoma manageri
         notificationManager = NotificationManagerCompat.from(this)
         val builder = NotificationCompat.Builder(this, BaseApplication.CHANNEL_1_ID)
-            .setSmallIcon(R.drawable.hit_fm)
+            .setLargeIcon(picture)
+            .setColorized(false)
+            .setSmallIcon(R.drawable.icon)
+            .setColorized(false)
             .setContentTitle("HIT FM")
             .setContentText("90.8")
-            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setStyle(NotificationCompat.BigPictureStyle().bigPicture(picture))  // Rangli rasmni qo'shish
             .setContentIntent(pendingIntent)
-            .setLargeIcon(picture)
             .addAction(R.drawable.baseline_skip_previous_24,"Prew",null)
-            .addAction(if (RadioState.isPlaying.value) R.drawable.baseline_pause_24 else R.drawable.baseline_play_circle_24,
+            .addAction(
+                if (RadioState.isPlaying.value)
+                    R.drawable.baseline_pause_24
+                else
+                    R.drawable.baseline_play_arrow_24,
             if (RadioState.isPlaying.value) "Pause" else "Play",
-            getActionIntent(if (RadioState.isPlaying.value) ACTION_PAUSE else ACTION_PLAY))
+            getActionIntent(if (RadioState.isPlaying.value) ACTION_PAUSE else ACTION_PLAY)
+            )
             .addAction(R.drawable.baseline_skip_next_24,"next",null)
             .setStyle(androidx.media.app.NotificationCompat.MediaStyle()
                 .setShowActionsInCompactView(0,1,2)
             )
-            .setColor(Color.WHITE)
-            .setColorized(true)
             .setSilent(true)
             .setAutoCancel(true)
             .setCategory(NotificationCompat.CATEGORY_MESSAGE)
@@ -104,26 +105,73 @@ class RadioService : Service() {
         )
     }
 
+    @SuppressLint("MissingPermission")
+    private fun updateNotification() {
+        val intent = Intent(this, MainActivity::class.java)
+        val pendingIntent = PendingIntent.getActivity(
+            this,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+        val picture = BitmapFactory.decodeResource(resources, R.drawable.icon)
+
+        // Xabarnoma uchun builder
+        val builder = NotificationCompat.Builder(this, BaseApplication.CHANNEL_1_ID)
+            .setLargeIcon(picture)
+            .setSmallIcon(R.drawable.icon)
+            .setColorized(false)
+            .setContentTitle("HIT FM")
+            .setContentText("90.8")
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setStyle(NotificationCompat.BigPictureStyle().bigPicture(picture))  // Rangli rasmni qo'shish
+            .setContentIntent(pendingIntent)
+            .addAction(R.drawable.baseline_skip_previous_24, "Prew", null)
+            .addAction(
+                if (RadioState.isPlaying.value)
+                    R.drawable.baseline_pause_24
+                else
+                    R.drawable.baseline_play_arrow_24,
+                if (RadioState.isPlaying.value) "Pause" else "Play",
+                getActionIntent(if (RadioState.isPlaying.value) ACTION_PAUSE else ACTION_PLAY)
+            )
+            .addAction(R.drawable.baseline_skip_next_24, "Next", null)
+            .setStyle(
+                androidx.media.app.NotificationCompat.MediaStyle()
+                    .setShowActionsInCompactView(0, 1, 2)
+            )
+            .setColor(Color.WHITE)
+            .setColorized(true)
+            .setSilent(true)
+            .setAutoCancel(true)
+            .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+            .setOnlyAlertOnce(true)
+            .setOngoing(false)
+
+        // Xabarnomani yangilash
+        notificationManager.notify(1, builder.build())
+    }
+
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        // Foydalanuvchi xabarnomadagi tugmalarni bosganda nima qilishni belgilash
         when (intent?.action) {
             ACTION_PLAY -> {
                 if (!player.isPlaying) {
-                    player.prepare()  // Tayyorlaymiz
+                    player.prepare()
                     player.play()
-                    RadioState.isPlaying.value = true // Singleton holatini yangilash
+                    RadioState.isPlaying.value = true
                 }
             }
             ACTION_PAUSE -> {
                 if (player.isPlaying) {
-                    player.stop()
-                    RadioState.isPlaying.value = false // Singleton holatini yangilash
+                    player.pause()
+                    RadioState.isPlaying.value = false
                 }
             }
         }
-        updateNotification()
+        updateNotification() // Xabarnomani yangilash
         return START_STICKY
     }
+
     override fun onDestroy() {
         super.onDestroy()
         player.release() // Player resurslarini bo'shatish
@@ -138,16 +186,11 @@ class RadioService : Service() {
         const val ACTION_PLAY = "com.example.hitfm.ACTION_PLAY"
         const val ACTION_PAUSE = "com.example.hitfm.ACTION_PAUSE"
     }
-    object RadioState {
-        var isPlaying = mutableStateOf(false)
-    }
-    // Method to update notification
-    private fun updateNotification() {
-        // Call the startForegroundService method to update the notification
-        startForegroundService()
-    }
+
 
 }
 
-
+object RadioState {
+    var isPlaying = mutableStateOf(false)
+}
 

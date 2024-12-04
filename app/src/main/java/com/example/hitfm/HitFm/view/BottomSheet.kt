@@ -1,4 +1,4 @@
-package com.example.hitfm.uiview
+package com.example.hitfm.view
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -9,22 +9,18 @@ import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -38,7 +34,7 @@ import androidx.compose.ui.unit.sp
 import com.example.hitfm.R
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.content.ContextCompat.startActivity
+import com.example.hitfm.ui.theme.Black
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -72,20 +68,20 @@ fun BottomSheet() {
         intent.setPackage("org.telegram.messenger")
         context.startActivity(Intent.createChooser(intent, "Share via Telegram"))
     }
-   fun copyToClipboard(text: String) {
+    fun copyTomClipboard(context: Context, text: String) {
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText("Copied Link", text)
         clipboard.setPrimaryClip(clip)
 
-        // Copy muvaffaqiyatli amalga oshganini ko'rsatish uchun Toast
+        // Foydalanuvchiga muvaffaqiyatli nusxalanganini bildirish uchun
         Toast.makeText(context, "Link nusxalandi", Toast.LENGTH_SHORT).show()
     }
     Column(
         modifier =Modifier.fillMaxWidth()
     ) {
         Text(
-            text = "Share",
-            modifier = Modifier.padding(16.dp), fontWeight = FontWeight.Bold, fontSize = 25.sp
+            text = "Поделиться",
+            modifier = Modifier.padding(16.dp), fontWeight = FontWeight.Bold, fontSize = 25.sp, color = Black
         )
         Spacer(modifier = Modifier.height(30.dp))
 
@@ -179,13 +175,13 @@ fun BottomSheet() {
                         indication = null, // Soyani olib tashlaydi
                         interactionSource = remember { MutableInteractionSource() },
                         onClick = {
-                            copyToClipboard("https://hitfm.uz/")
+                            copyTomClipboard(context,"https://hitfm.uz/")
                         }
                     ),
 
             )
             Spacer(modifier =Modifier.width(30.dp))
-            Text(text = "Havolani Nusxalash")
+            Text(text = "Поделиться ссылкой")
         }
         Spacer(modifier = Modifier.height(10.dp))
     }
