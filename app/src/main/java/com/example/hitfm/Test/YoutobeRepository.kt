@@ -1,8 +1,7 @@
-package com.example.hitfm
+package com.example.hitfm.Test
 
-import com.example.hitfm.apimodel.YouTubeResponse
-import com.example.hitfm.data.YouTubeService
-import retrofit2.Call
+import com.example.hitfm.Test.apimodel.YouTubeResponse
+import com.example.hitfm.Test.data.YouTubeService
 import javax.inject.Inject
 
 import retrofit2.Response
@@ -12,7 +11,7 @@ class YouTubeRepository @Inject constructor(
 ) {
 
     // Playlist elementlarini olish
-    suspend fun getPlaylistItems(playlistId: String, apiKey: String): Response<YouTubeResponse> {
-        return youTubeService.getPlaylistItems(playlistId, apiKey)
+    suspend fun getPlaylistItems(): Response<YouTubeResponse> {
+        return youTubeService.getPlaylistItems()
     }
 }

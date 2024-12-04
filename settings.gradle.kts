@@ -16,7 +16,10 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        gradlePluginPortal()  // Bu qo'shishni unutmang!
+
     }
+
 }
 
 rootProject.name = "HIT FM"

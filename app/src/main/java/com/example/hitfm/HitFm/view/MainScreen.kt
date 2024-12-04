@@ -1,4 +1,4 @@
-package com.example.hitfm.view
+package com.example.hitfm.HitFm.view
 import android.content.Intent
 import android.os.Build
 import android.util.Log
@@ -19,15 +19,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material3.Badge
-import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -39,37 +32,27 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.example.hitfm.HitFm.NavItem
-import androidx.compose.material.icons.filled.MoreHoriz
-import androidx.compose.material.icons.filled.MusicNote
-import androidx.compose.material.icons.filled.YoutubeSearchedFor
-import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.zIndex
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.hitfm.R
 import com.example.hitfm.HitFm.RadioService
 import com.example.hitfm.HitFm.RadioState
-import com.example.hitfm.HitFm.YoutobeScreen
-import com.example.hitfm.ui.theme.Black
+import com.example.hitfm.HitFm.view.SelectedIndex.selectedIndex
+import com.example.hitfm.Test.YouTubeViewModel
+import com.mohamedbenrejeb.youtubecomposemotionlayout.screens.home.HomeScreen
+import com.mohamedbenrejeb.youtubecomposemotionlayout.screens.home.MyNavigationBar
 
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
+fun MainScreen(youTubeViewModel: YouTubeViewModel,navController: NavController) {
 
     val context= LocalContext.current
-
-    val navItemList = listOf(
-        NavItem("Слушать", Icons.Filled.MusicNote,0),
-        NavItem("Еще", Icons.Filled.MoreHoriz,0),
-        NavItem("YouTobe",Icons.Filled.YoutubeSearchedFor,0)
-    )
-
-    var selectedIndex by remember {
-        mutableIntStateOf(0)
-    }
-
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
@@ -136,55 +119,28 @@ fun MainScreen() {
 
                     }
                 }}
-                NavigationBar (
-                    containerColor = Color.White// Set the background color of the NavigationBar
-
-                ){
-                    navItemList.forEachIndexed { index, navItem ->
-                        NavigationBarItem(
-                            selected = selectedIndex == index,
-                            onClick = {
-                                selectedIndex = index
-                            },
-                            icon = {
-                                BadgedBox(badge = {
-                                    if (navItem.badgeCount > 0)
-                                        Badge() {
-                                            Text(text = navItem.badgeCount.toString())
-                                        }
-                                }) {
-                                    Icon(imageVector = navItem.icon, contentDescription = "Icon")
-                                }
-
-                            },
-                            label = {
-                                Text(text = navItem.label)
-                            },
-                            colors = NavigationBarItemDefaults.colors(
-                                selectedIconColor = Color.Black,  // Specify color for the icon when selected
-                                unselectedIconColor = Color.LightGray, // Specify color for the icon when unselected
-                                selectedTextColor = Black,   // Specify color for text when selected
-                                unselectedTextColor = Color.LightGray, // Specify color for text when unselected
-                                indicatorColor = Color.White  // Set indicator color to transparent
-                            )
-                        )
-                    }
+                if(selectedIndex!=2) {
+                    MyNavigationBar(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .zIndex(1f)
+                            .layoutId("navigationBar")
+                    )
                 }
             }
         }
     ) { innerPadding ->
-        ContentScreen(modifier = Modifier.padding(innerPadding),selectedIndex)
+        ContentScreen(modifier = Modifier.padding(innerPadding),selectedIndex,navController)
     }
 }
 
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable
-fun ContentScreen(modifier: Modifier = Modifier, selectedIndex : Int) {
+fun ContentScreen(modifier: Modifier = Modifier, selectedIndex : Int,navController: NavController) {
     when(selectedIndex){
         0-> RadioPlayer()
-        1-> MoreScreen()
-        3-> YoutobeScreen()
+        1-> MoreScreen(navController)
     }
 }
 
@@ -213,4 +169,7 @@ fun ImageInCircle(
             modifier = modifier.size(imageSize)  // Rasmingizning o'lchami
         )
     }
+}
+object SelectedIndex{
+    var selectedIndex by mutableIntStateOf(0)
 }

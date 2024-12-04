@@ -30,7 +30,6 @@ fun VideoFullDetails(
 
     Column(
         modifier = modifier
-            .padding(all = 10.dp)
     ) {
         Text(
             text = videoUiState.title,
@@ -71,34 +70,6 @@ fun VideoFullDetails(
             )
         }
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-        ) {
-            IconButton(onClick = {}) {
-                Icon(
-                    imageVector = Icons.Default.ThumbUp,
-                    contentDescription = "ThumbUp",
-                    tint = colorScheme.onBackground
-                )
-            }
-
-            IconButton(onClick = {}) {
-                Icon(
-                    imageVector = Icons.Default.Share,
-                    contentDescription = "Share",
-                    tint = colorScheme.onBackground
-                )
-            }
-
-            IconButton(onClick = {}) {
-                Icon(
-                    imageVector = Icons.Default.Favorite,
-                    contentDescription = "Favorite",
-                    tint = colorScheme.onBackground
-                )
-            }
-        }
     }
 }
 

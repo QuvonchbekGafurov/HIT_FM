@@ -1,4 +1,4 @@
-package com.example.hitfm.view
+package com.example.hitfm.HitFm.view
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.sp
 import com.example.hitfm.R
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import com.example.hitfm.ui.theme.Black
+import com.example.hitfm.HitFm.theme.Black
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

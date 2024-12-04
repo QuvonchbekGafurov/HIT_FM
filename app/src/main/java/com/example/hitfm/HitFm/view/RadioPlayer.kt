@@ -1,4 +1,4 @@
-package com.example.hitfm.view
+package com.example.hitfm.HitFm.view
 
 import android.content.Intent
 import android.os.Build
@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import com.example.hitfm.R
 import com.example.hitfm.HitFm.RadioService
 import com.example.hitfm.HitFm.RadioState
-import com.example.hitfm.ui.theme.Black
+import com.example.hitfm.HitFm.theme.Black
 
 @RequiresApi(Build.VERSION_CODES.Q)
 @Composable

@@ -1,5 +1,7 @@
-package com.example.hitfm.data.module
-import com.example.hitfm.data.YouTubeService
+package com.example.hitfm.Test.data.module
+
+import com.example.hitfm.Test.YouTubeRepository
+import com.example.hitfm.Test.data.YouTubeService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,4 +27,10 @@ object RetrofitModule {
     fun provideYouTubeService(retrofit: Retrofit): YouTubeService {
         return retrofit.create(YouTubeService::class.java)
     }
+
+    @Provides
+    fun provideYouTubeRepository(youTubeService: YouTubeService): YouTubeRepository {
+        return YouTubeRepository(youTubeService)
+    }
+
 }

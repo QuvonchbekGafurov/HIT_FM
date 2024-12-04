@@ -1,4 +1,4 @@
-package com.example.hitfm.apimodel
+package com.example.hitfm.Test.apimodel
 
 data class PageInfo(
     val resultsPerPage: Int,

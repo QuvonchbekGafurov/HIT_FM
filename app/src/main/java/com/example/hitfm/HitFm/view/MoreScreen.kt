@@ -1,4 +1,4 @@
-package com.example.hitfm.view
+package com.example.hitfm.HitFm.view
 
 import android.content.Intent
 import android.net.Uri
@@ -34,14 +34,15 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.hitfm.R
-import com.example.hitfm.ui.theme.Black
+import com.example.hitfm.HitFm.theme.Black
 
 // 1. Roboto shrift oilasini yaratamiz
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
-fun MoreScreen() {
+fun MoreScreen(navController: NavController) {
     val robotoFontFamily = FontFamily(
         Font(R.font.roboto_regular, FontWeight.Normal),
         Font(R.font.roboto_bold, FontWeight.Bold),
@@ -55,7 +56,7 @@ fun MoreScreen() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(20.dp),
+            .padding(horizontal = 20.dp),
         verticalArrangement = Arrangement.SpaceBetween, // Elementlarni yuqori va pastki qismda ajratadi
     ) {
         Image(
@@ -188,8 +189,38 @@ fun MoreScreen() {
             )
 
         }
+        Spacer(modifier = Modifier.height(10.dp))
+        Row(
+            modifier = Modifier,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
 
-    }
+            ImageInCircle(
+                image = R.drawable.youtube,
+                imageSize = 35.dp,
+                circleSize = 35.dp,
+                color = Color.Green,
+                modifier = Modifier.combinedClickable(
+                    indication = null, // Soyani olib tashlaydi
+                    interactionSource = remember { MutableInteractionSource() },
+                    onClick = {
+                        navController.navigate("screen2") // Ikkinchi ekranga o'tish
+                    }
+                )
+            )
+            Spacer(modifier = Modifier.width(10.dp))
+            Text(
+                text = "Импульс ток шоу",
+                fontFamily = robotoFontFamily,
+                modifier = Modifier,
+                color = Black,
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
+
+
+        }
 }
 
 

@@ -5,19 +5,15 @@
         width: 'spread',
         height: 'spread',
         top: ['parent', 'top'],
-        bottom: ['navigationBar', 'top'],
-        start: ['parent', 'start'],
-        end: ['parent', 'end']
-      },
-      navigationBar: {
         bottom: ['parent', 'bottom'],
         start: ['parent', 'start'],
         end: ['parent', 'end']
       },
+
       thumbnail: {
-        height: 60,
-        width: 140,
-        bottom: ['navigationBar', 'top'],
+        height: 80,
+        width: 150,
+        bottom: ['parent', 'bottom'],
         start: ['parent', 'start'],
       },
       details: {
@@ -42,15 +38,9 @@
         width: 'spread',
         height: 'spread',
         top: ['parent', 'top'],
-        bottom: ['navigationBar', 'top'],
+        bottom: ['parent', 'bottom'],
         start: ['parent', 'start'],
         end: ['parent', 'end'],
-      },
-      navigationBar: {
-        width: 'wrap',
-        top: ['parent', 'bottom'],
-        start: ['parent', 'start'],
-        end: ['parent', 'end']
       },
       thumbnail: {
         width: 'spread',

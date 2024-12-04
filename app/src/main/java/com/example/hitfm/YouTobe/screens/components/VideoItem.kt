@@ -17,22 +17,26 @@ fun VideoItem(
     videoUiState: VideoUiState,
     modifier: Modifier = Modifier
 ) {
-    Column(
+    Row(
         modifier = modifier
             .clickable { onVideoItemClick(videoUiState) }
     ) {
         VideoItemThumbnail(
             videoUiState = videoUiState,
             modifier = Modifier
+                .height(100.dp)
                 .fillMaxWidth()
+                .weight(1f)
         )
-
         VideoItemDetails(
             videoUiState = videoUiState,
             modifier = Modifier
+                .height(100.dp)
                 .fillMaxWidth()
+                .weight(1f)
         )
     }
+
 }
 
 @Preview

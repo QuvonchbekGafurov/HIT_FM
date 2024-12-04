@@ -1,4 +1,4 @@
-package com.example.hitfm.ui.theme
+package com.example.hitfm.HitFm.theme
 
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme

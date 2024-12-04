@@ -29,16 +29,7 @@ fun VideoItemDetails(
     Row(
         verticalAlignment = Alignment.Top,
         modifier = modifier
-            .padding(all = 10.dp)
     ) {
-        Image(
-            painter = painterResource(id = videoUiState.authorImageResId),
-            contentDescription = videoUiState.author,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .size(42.dp)
-                .clip(CircleShape)
-        )
 
         Spacer(modifier = Modifier.width(10.dp))
 
