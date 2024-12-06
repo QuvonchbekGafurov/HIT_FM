@@ -1,5 +1,8 @@
 package com.example.hitfm.Test
+import android.content.Intent
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -22,9 +25,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.LifecycleOwner
+import com.example.hitfm.HitFm.RadioService
 import com.example.hitfm.Test.apimodel.YouTubeResponse
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
@@ -36,12 +41,14 @@ object YouTubePlayerState {
     var youTubePlayer: YouTubePlayer? = null
     var isPlaying: MutableState<Boolean> = mutableStateOf(false)
 }
+@RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 fun YouTubeVideoPlayer(
     modifier: Modifier,
     videoId: String,
     lifecycleOwner: LifecycleOwner
 ) {
+    val context= LocalContext.current
     Log.e("TAG", "YouTubeVideoPlayerid: $videoId", )
     if (videoId!=null) {
         AndroidView(
@@ -89,6 +96,16 @@ fun YouTubeVideoPlayer(
 
         LaunchedEffect(videoId) {
             YouTubePlayerState.youTubePlayer?.loadVideo(videoId, 0f)
+        }
+        // YouTube o'ynayotgan bo'lsa, radio avtomatik to'xtaydi
+        LaunchedEffect(YouTubePlayerState.isPlaying.value) {
+            if (YouTubePlayerState.isPlaying.value) {
+                // Radio pauza qilinadi
+                val pauseIntent = Intent(context, RadioService::class.java).apply {
+                    action = RadioService.ACTION_PAUSE
+                }
+                context.startService(pauseIntent)
+            }
         }
     }
 }

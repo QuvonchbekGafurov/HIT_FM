@@ -164,7 +164,7 @@ class RadioService : Service() {
             }
             ACTION_PAUSE -> {
                 if (player.isPlaying) {
-                    player.pause()
+                    player.stop()
                     RadioState.isPlaying.value = false
                 }
             }

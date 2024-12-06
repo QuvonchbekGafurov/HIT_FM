@@ -4,8 +4,8 @@ import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.hitfm.R
 import com.example.hitfm.HitFm.theme.Black
+import androidx.compose.foundation.interaction.MutableInteractionSource
 
 // 1. Roboto shrift oilasini yaratamiz
 
@@ -99,7 +100,15 @@ fun MoreScreen(navController: NavController) {
                 text = "Контакты",
                 color = Black,
                 fontFamily = robotoFontFamily,
-                modifier = Modifier,
+                modifier = Modifier
+                    .clickable (
+                        interactionSource = remember { MutableInteractionSource() }, // Bosilish effektini boshqarish
+                        indication = null, // Bosilish effektini o'chirish
+                    ) {
+                        val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:+998881149080"))
+                        context.startActivity(intent)
+                    }
+                ,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -136,7 +145,13 @@ fun MoreScreen(navController: NavController) {
             Text(
                 text = "Поделиться",
                 fontFamily = robotoFontFamily,
-                modifier = Modifier,
+                modifier = Modifier.clickable(
+                    interactionSource = remember { MutableInteractionSource() }, // Bosilish effektini boshqarish
+                    indication = null, // Bosilish effektini o'chirish
+                ) {
+                    showBottomSheet=true
+                }
+                ,
                 color = Black,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Bold
@@ -147,7 +162,8 @@ fun MoreScreen(navController: NavController) {
             text = "Мы в соцсетях",
             color = Black,
             modifier = Modifier
-                .padding(top = 20.dp),
+                .padding(top = 20.dp)
+            ,
             fontSize = 25.sp,
             fontWeight = FontWeight.Bold
         )
@@ -212,7 +228,14 @@ fun MoreScreen(navController: NavController) {
             Text(
                 text = "Импульс ток шоу",
                 fontFamily = robotoFontFamily,
-                modifier = Modifier,
+                modifier = Modifier.clickable (
+                    interactionSource = remember { MutableInteractionSource() }, // Bosilish effektini boshqarish
+                    indication = null, // Bosilish effektini o'chirish
+                ){
+                    navController.navigate("screen2") // Ikkinchi ekranga o'tish
+                }
+
+                ,
                 color = Black,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Bold

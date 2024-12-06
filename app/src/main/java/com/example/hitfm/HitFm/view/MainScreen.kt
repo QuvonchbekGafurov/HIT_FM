@@ -112,7 +112,6 @@ fun MainScreen(youTubeViewModel: YouTubeViewModel,navController: NavController) 
                                         context.startService(playIntent)
                                         RadioState.isPlaying.value = true
                                     }
-
                                 },
                         )
                         ImageInCircle(color = Color.White, image =R.drawable.next_arrows,imageSize = 25.dp, modifier = Modifier)
