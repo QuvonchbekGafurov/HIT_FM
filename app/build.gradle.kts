@@ -13,6 +13,7 @@ android {
     defaultConfig {
         applicationId = "com.example.hitfm"
         minSdk = 24
+        //noinspection OldTargetApi
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -77,18 +78,18 @@ dependencies {
     implementation(libs.androidx.media3.exoplayer.dash)
     implementation(libs.androidx.media3.ui)
 
-    implementation ("androidx.localbroadcastmanager:localbroadcastmanager:1.0.0")
+    implementation ("androidx.localbroadcastmanager:localbroadcastmanager:1.1.0")
 
-    implementation("androidx.media:media:1.1.0")
+    implementation("androidx.media:media:1.7.0")
 
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.6")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
 
-    implementation ("androidx.compose.material3:material3:1.3.0")
-    implementation ("androidx.compose.material:material-icons-core:1.1.0")
-    implementation ("androidx.compose.material:material-icons-extended:1.1.0")
+    implementation ("androidx.compose.material3:material3:1.3.1")
+    implementation ("androidx.compose.material:material-icons-core:1.7.6")
+    implementation ("androidx.compose.material:material-icons-extended:1.7.6")
 
-    implementation ("androidx.compose.material:material:1.4.0-alpha02")
-    implementation ("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+    implementation ("androidx.compose.material:material:1.7.6")
+    implementation ("androidx.constraintlayout:constraintlayout-compose:1.1.0")
 
 
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
@@ -96,7 +97,7 @@ dependencies {
     implementation ("com.squareup.okhttp3:logging-interceptor:4.10.0")
 
     // Gson kutubxonasi
-    implementation ("com.google.code.gson:gson:2.8.8")
+    implementation ("com.google.code.gson:gson:2.11.0")
 
 
     implementation("com.google.dagger:hilt-android:2.51.1")
@@ -104,7 +105,7 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.4.0")
 
     implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.0.0")
-    implementation ("androidx.navigation:navigation-compose:2.7.3")
+    implementation ("androidx.navigation:navigation-compose:2.8.5")
 
 
 }

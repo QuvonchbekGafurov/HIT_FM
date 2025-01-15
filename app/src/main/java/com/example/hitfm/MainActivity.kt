@@ -6,9 +6,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
-import com.example.hitfm.HitFm.MyApp
-import com.example.hitfm.HitFm.view.MainScreen
-import com.example.hitfm.Test.YouTubeViewModel
+import com.example.hitfm.navigation.MyApp
+import com.example.hitfm.presentation.viewmodel.YouTubeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
