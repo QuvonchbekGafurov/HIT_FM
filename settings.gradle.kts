@@ -11,6 +11,8 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -19,9 +21,9 @@ dependencyResolutionManagement {
         gradlePluginPortal()  // Bu qo'shishni unutmang!
 
     }
-
 }
 
 rootProject.name = "HIT FM"
 include(":app")
- 
+include(":data")
+include(":domainn")

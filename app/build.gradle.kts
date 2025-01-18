@@ -107,7 +107,8 @@ dependencies {
     implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.0.0")
     implementation ("androidx.navigation:navigation-compose:2.8.5")
 
-
+    implementation (project(":domainn"))
+    implementation (project(":data"))
 }
 kapt{
     correctErrorTypes = true
